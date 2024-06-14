@@ -5,14 +5,14 @@ defmodule ForumWeb.PostJSON do
   Renders a list of posts.
   """
   def index(%{posts: posts}) do
-    %{data: for(post <- posts, do: with_user_data(post))}
+    %{data: for(post <- posts, do: Map.merge(data(post), user_data(post)))}
   end
 
   @doc """
   Renders a single post.
   """
   def show(%{post: post}) do
-    %{data: with_user_data(post)}
+    %{data: Map.merge(data(post), user_data(post))}
   end
 
   def data(%Post{} = post) do
@@ -23,7 +23,7 @@ defmodule ForumWeb.PostJSON do
     }
   end
 
-  defp with_user_data(%Post{} = post) do
-    Map.merge(data(post), %{user_id: post.user_id})
+  defp user_data(%Post{} = post) do
+    %{user_id: post.user_id}
   end
 end

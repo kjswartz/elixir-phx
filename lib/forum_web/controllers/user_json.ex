@@ -13,7 +13,12 @@ defmodule ForumWeb.UserJSON do
   Renders a single user.
   """
   def show(%{user: user}) do
-    %{data: Map.merge(data(user), %{posts: Enum.map(user.posts, &PostJSON.data/1)})}
+    %{
+      data: Map.merge(
+        data(user),
+        %{posts: posts(user)}
+      )
+    }
   end
 
   defp data(%User{} = user) do
@@ -22,5 +27,9 @@ defmodule ForumWeb.UserJSON do
       name: user.name,
       email: user.email
     }
+  end
+
+  defp posts(%User{} = user) do
+    Enum.map(user.posts, &PostJSON.data/1)
   end
 end
