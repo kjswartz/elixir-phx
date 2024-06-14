@@ -1,5 +1,6 @@
 defmodule ForumWeb.UserJSON do
   alias Forum.Accounts.User
+  alias ForumWeb.PostJSON
 
   @doc """
   Renders a list of users.
@@ -12,7 +13,7 @@ defmodule ForumWeb.UserJSON do
   Renders a single user.
   """
   def show(%{user: user}) do
-    %{data: data(user)}
+    %{data: Map.merge(data(user), %{posts: Enum.map(user.posts, &PostJSON.data/1)})}
   end
 
   defp data(%User{} = user) do

@@ -5,6 +5,7 @@ defmodule Forum.Accounts.User do
   schema "users" do
     field :name, :string
     field :email, :string
+    has_many :posts, Forum.Posts.Post
 
     timestamps(type: :utc_datetime)
   end
@@ -12,7 +13,7 @@ defmodule Forum.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
+    |> cast(attrs, [:name, :email, :posts])
     |> validate_required([:name, :email])
   end
 end
