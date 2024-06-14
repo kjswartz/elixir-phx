@@ -24,7 +24,7 @@ defmodule ForumWeb.Router do
 
   scope "/api", ForumWeb do
     pipe_through :api
-    get "/posts", PostController, except: [:new, :edit]
+    resources "/posts", PostController, except: [:new, :edit]
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
