@@ -1,4 +1,4 @@
-defmodule ForumWeb.UsersController do
+defmodule ForumWeb.UserController do
   use ForumWeb, :controller
 
   def users_html(conn, _params) do

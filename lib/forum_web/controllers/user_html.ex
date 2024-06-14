@@ -1,4 +1,4 @@
-defmodule ForumWeb.UsersHTML do
+defmodule ForumWeb.UserHTML do
   use ForumWeb, :html
 
   embed_templates "users_html/*"

@@ -18,14 +18,14 @@ defmodule ForumWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/users_html", UsersController, :users_html
-    get "/users_json", UsersController, :users_json
+    get "/users_html", UserController, :users_html
+    get "/users_json", UserController, :users_json
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ForumWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", ForumWeb do
+    pipe_through :api
+    get "/posts", PostController, except: [:new, :edit]
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:forum, :dev_routes) do
