@@ -13,14 +13,14 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ```
 curl -X POST http://localhost:4000/api/users -H "Content-Type: application/json" -d '{"user": {"name": "kyle", "email": "kyle@gmail.com"}}'
 
-> {"data":{"id":1,"title":"hello world","body":"what a beautiful day today!"}}
+> {"data":{"id":1,"name":"kyle","email":"kyle@gmail.com"}}
 ```
 
 ## Creating a Post
 ```
 curl -X POST http://localhost:4000/api/posts -H "Content-Type: application/json" -d '{"post": {"user_id": 1, "title": "hello world", "body": "what a beautiful day today!"}}'
 
-> {"data":{"id":1,"title":"hello world","body":"what a beautiful day today!"}}
+> {"data":{"id":1,"title":"hello world","body":"what a beautiful day today!", "user_id": 1}}
 ```
 
 ## Learn more
