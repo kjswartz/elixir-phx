@@ -9,6 +9,13 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## Creating a Post
+```
+curl -X POST http://localhost:4000/api/posts -H "Content-Type: application/json" -d '{"post": {"title": "hello world", "body": "what a beautiful day today!"}}'
+
+> {"data":{"id":1,"title":"hello world","body":"what a beautiful day today!"}}
+```
+
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/
