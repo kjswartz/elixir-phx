@@ -1,21 +1,43 @@
 defmodule ForumWeb.UserController do
   use ForumWeb, :controller
 
-  def users_html(conn, _params) do
-    users = [
-      %{ id: 1, name: "Kyle", email: "kyle@gmail.com"},
-      %{ id: 2, name: "Bob", email: "bob@gmail.com"}
-    ]
-    IO.puts("Users html controller func hit!")
-    render(conn, :users, users: users, layout: false)
+  alias Forum.Accounts
+  alias Forum.Accounts.User
+
+  action_fallback ForumWeb.FallbackController
+
+  def index(conn, _params) do
+    users = Accounts.list_users()
+    render(conn, :index, users: users)
   end
 
-  def users_json(conn, _params) do
-    users = [
-      %{ id: 1, name: "Kyle", email: "kyle@gmail.com"},
-      %{ id: 2, name: "Bob", email: "bob@gmail.com"}
-    ]
-    IO.puts("Users json controller func hit!")
-    json(conn, %{users: users})
+  def create(conn, %{"user" => user_params}) do
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", ~p"/api/users/#{user}")
+      |> render(:show, user: user)
+    end
+  end
+
+  def show(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
+    render(conn, :show, user: user)
+  end
+
+  def update(conn, %{"id" => id, "user" => user_params}) do
+    user = Accounts.get_user!(id)
+
+    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
+      render(conn, :show, user: user)
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
+
+    with {:ok, %User{}} <- Accounts.delete_user(user) do
+      send_resp(conn, :no_content, "")
+    end
   end
 end
